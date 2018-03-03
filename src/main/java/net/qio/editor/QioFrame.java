@@ -49,7 +49,7 @@ public class QioFrame extends JFrame implements ActionListener {
         setJMenuBar(mb);
 
         setContentPane(panel);
-        setTitle("Qio Editor 2.8");
+        setTitle("Qio Editor");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);

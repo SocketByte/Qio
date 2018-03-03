@@ -47,7 +47,7 @@ public class QioInterpreter {
         loopContainer.clear();
         QioWorkHolder.setLoopIndex(-1);
         System.gc();
-        System.out.println("Qio Alpha v2.8 running...");
+        System.out.println("Qio Alpha running...");
         System.out.println();
         for (String line : lines) {
             if (line.startsWith("#"))
