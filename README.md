@@ -8,7 +8,7 @@ The worst classes are definitely `QioInterpreter` and `TypeDetector`. These are 
 ... but it works, and it works pretty fast actually!
 
 # Examples
-![img](https://gm1.ggpht.com/woTRqEgi3dAXYS0NsGYC8K3VImz-yURoTr0TLl7oUEQPaE4bWw9JDGWNmlBL33ZpsCub05C7JrVY_Zf0X0LNT_KKLfXJo5wyFeGUoRG-W7Es0XpJcQC-G9mlqMffZC96eEaW6lEF-1vbtsX3kLA5ctsrhIGDxQ_qxqtomKhRt5_HiQjz1BhbKLke7KmwXdAw4ekvWPV4hGvNMZy2ZEi59qEY6AIUAaJN4H7ySpqBczQl2bc04BRyypgO30vU8kv8Sm7UioBRfWiYqnVODNPsq8a2bXYWih2mOXw8B4rR3VivJcu8pUWcRUmad3jDAVZHIKTGHxJFn3lJ0db7AZZPYQRKQ9AWHd7fgjX3UzUo7fqotIJlIPZpcNiSLeOz3S3T8aUYTJldhAj2Qz5If-_5gio07I6ZrtCk6VJUmFd2-G-XRuU7X1TxkaZDvgXR1ls-O4AoJfYe4nOz5_E4Ykub8Z8gvYswDiQXW16V-SGuoGRVCIYg6zYXJ9pU0fBZASeI_B_a3GipCBXrwg9dNzkpOfg9TDqf5UYnKCRBH-H4R9wPztTxxC4TfN4ZWN-9iyTkfua1aqaG983FfwP4kzwUvJ3cactAjEi7QSWf7j1cw0S8BwLXGNT7pklRhe75NsObQNfrrf28unQRlJhQwuwV-7FX-K-7K-2dRAIYWQ4vGwsMd-wlXWdgIib6ZydY=w748-h1124-l75-ft)
+![img](https://i.imgur.com/PjaoWHH.png)
 
 # How to open it?
 Download the editor and lang (built-in) from the **Releases** page
