@@ -14,7 +14,7 @@ The worst classes are definitely `QioInterpreter` and `TypeDetector`. These are 
 Download the editor and lang (built-in) from the **Releases** page
 and run it using
 ```
-java -jar Qio-v2.8.jar
+java -jar Qio.jar
 pause
 ```
 # Bugs?
