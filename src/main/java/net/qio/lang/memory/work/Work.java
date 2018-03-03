@@ -1,18 +1,21 @@
-package net.qio.lang.memory;
+package net.qio.lang.memory.work;
+
+import lombok.Data;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class FunctionWork {
+@Data
+public class Work {
 
-    private List<FunctionCommand> commands = new LinkedList<>();
+    private List<IWork> commands = new LinkedList<>();
 
-    public void push(FunctionCommand command) {
+    public void push(IWork command) {
         commands.add(command);
     }
 
     public void execute() {
-        for (FunctionCommand command : commands)
+        for (IWork command : commands)
             command.execute();
     }
 
@@ -21,7 +24,7 @@ public class FunctionWork {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FunctionWork that = (FunctionWork) o;
+        Work that = (Work) o;
 
         return commands != null ? commands.equals(that.commands) : that.commands == null;
     }

@@ -1,23 +1,26 @@
-package net.qio.lang.memory;
+package net.qio.lang.memory.work;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import net.qio.lang.commands.Command;
 
 @Getter
 @Setter
-public class FunctionCommand {
+@ToString
+public class WorkCommand implements IWork {
 
     private Command command;
     private int tabs;
     private String syntax;
 
-    public FunctionCommand(Command command, int tabs, String syntax) {
+    public WorkCommand(Command command, int tabs, String syntax) {
         this.command = command;
         this.tabs = tabs;
         this.syntax = syntax;
     }
 
+    @Override
     public void execute() {
         command.execute(tabs, syntax);
     }
@@ -27,7 +30,7 @@ public class FunctionCommand {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FunctionCommand that = (FunctionCommand) o;
+        WorkCommand that = (WorkCommand) o;
 
         return tabs == that.tabs
                 && (command != null ? command.equals(that.command) : that.command == null)

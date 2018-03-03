@@ -2,6 +2,7 @@ package net.qio.lang.memory;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.qio.lang.memory.work.Work;
 
 @Getter
 @Setter
@@ -9,9 +10,9 @@ public class Function<T> extends QioReference {
 
     private String name;
     private T callback;
-    private FunctionWork work;
+    private Work work;
 
-    public Function(String name, T callback, FunctionWork work) {
+    public Function(String name, T callback, Work work) {
         this.name = name;
         this.callback = callback;
         this.work = work;

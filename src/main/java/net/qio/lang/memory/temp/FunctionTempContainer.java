@@ -1,13 +1,14 @@
-package net.qio.lang.memory;
+package net.qio.lang.memory.temp;
 
 import lombok.Data;
+import net.qio.lang.memory.work.Work;
 
 @Data
 public class FunctionTempContainer {
 
     private String name;
     private Class<?> type;
-    private FunctionWork currentWork;
+    private Work currentWork;
 
     private boolean functionCall;
 

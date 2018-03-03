@@ -1,10 +1,11 @@
 package net.qio.lang.splitters;
 
+import net.qio.lang.exceptions.SyntaxException;
 import net.qio.lang.utilities.types.Dump;
 
 public class EqualSplitter<A, B> extends QioAbstractSplitter<A, B> {
 
-    public EqualSplitter(String source) {
+    public EqualSplitter(String source) throws SyntaxException {
         super(source);
     }
 

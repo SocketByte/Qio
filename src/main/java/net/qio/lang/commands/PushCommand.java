@@ -1,11 +1,17 @@
 package net.qio.lang.commands;
 
+import net.qio.lang.QioInterpreter;
 import net.qio.lang.exceptions.SyntaxException;
 import net.qio.lang.memory.Function;
-import net.qio.lang.memory.QioFunctionAllocator;
-import net.qio.lang.memory.QioVariableAllocator;
+import net.qio.lang.memory.allocators.QioFunctionAllocator;
+import net.qio.lang.memory.allocators.QioVariableAllocator;
 import net.qio.lang.memory.Variable;
+import net.qio.lang.memory.allocators.QioWorkHolder;
+import net.qio.lang.memory.temp.LoopTempContainer;
+import net.qio.lang.memory.work.WorkLoop;
 import net.qio.lang.splitters.EqualSplitter;
+import net.qio.lang.utilities.MathUtilities;
+import net.qio.lang.utilities.StringUtilities;
 import net.qio.lang.utilities.types.Keyword;
 import net.qio.lang.utilities.types.Type;
 import net.qio.lang.utilities.TypeDetector;
@@ -18,11 +24,16 @@ public class PushCommand extends Command {
     @SuppressWarnings("unchecked")
     @Override
     public void execute(int tabs, String syntax) {
-        EqualSplitter<String, String> splitter = new EqualSplitter<>(syntax);
+        EqualSplitter<String, String> splitter = null;
+        try {
+            splitter = new EqualSplitter<>(syntax);
+        } catch (SyntaxException e) {
+            e.printStackTrace();
+        }
         String first = splitter.getFirstPart();
         String second = splitter.getSecondPart();
-        Type type1 = TypeDetector.detect(first);
-        Type type2 = TypeDetector.detect(second);
+        Type type1 = TypeDetector.detect(first, false);
+        Type type2 = TypeDetector.detect(second, true);
 
         if (type1 == null || type2 == null) {
             try {
@@ -42,10 +53,31 @@ public class PushCommand extends Command {
                     QioVariableAllocator.createReference(first, variable2);
                     break;
                 case STRING:
-                    QioVariableAllocator.set(variable, second);
+                    String parsed = StringUtilities.parse(second);
+                    Object val = parsed;
+                    try {
+                        String condition = StringUtilities.conditionPush(parsed);
+                        if (condition != null) {
+                            val = TypeDetector.convertToValue(TypeDetector.detect(condition, true), condition);
+                        }
+                    } catch (Exception ignored) {
+                    }
+                    //new PushCommand().execute(tabs, "PUSH " + first + " = " + val);
+                    QioVariableAllocator.set(variable, val);
                     break;
                 case INTEGER:
-                    QioVariableAllocator.set(variable, Integer.valueOf(second));
+                    try {
+                        String replaced = second;
+                        for (Variable variable1 : QioVariableAllocator.getVariables().values()) {
+                            replaced = replaced.replace(variable1.getName(),
+                                    QioVariableAllocator.getRealValue(variable1).toString());
+                        }
+                        double value = MathUtilities.eval(replaced);
+
+                        QioVariableAllocator.set(variable, value);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case FUNCTION: {
                     Function function = QioFunctionAllocator.pull(second);
@@ -69,10 +101,28 @@ public class PushCommand extends Command {
                     QioVariableAllocator.createReference(first, variable2);
                     break;
                 case STRING:
-                    QioVariableAllocator.createVariable(first, second);
+                    String parsed = StringUtilities.parse(second);
+                    Object val = parsed;
+                    String condition = StringUtilities.conditionPush(parsed);
+                    if (condition != null) {
+                        val = TypeDetector.convertToValue(TypeDetector.detect(condition, true), condition);
+                    }
+                    //new PushCommand().execute(tabs, "PUSH " + first + " = " + val);
+                    QioVariableAllocator.createVariable(first, val);
                     break;
                 case INTEGER:
-                    QioVariableAllocator.createVariable(first, Integer.valueOf(second));
+                    try {
+                        String replaced = second;
+                        for (Variable variable1 : QioVariableAllocator.getVariables().values()) {
+                            replaced = replaced.replace(variable1.getName(),
+                                    QioVariableAllocator.getRealValue(variable1).toString());
+                        }
+                        double value = MathUtilities.eval(replaced);
+
+                        QioVariableAllocator.createVariable(first, value);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case FUNCTION: {
                     Function function = QioFunctionAllocator.pull(second);
@@ -94,9 +144,6 @@ public class PushCommand extends Command {
             } catch (SyntaxException e) {
                 e.printStackTrace();
             }
-        }
-        else {
-            System.out.println("null");
         }
     }
 }

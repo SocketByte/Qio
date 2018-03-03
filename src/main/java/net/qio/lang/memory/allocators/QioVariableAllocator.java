@@ -1,7 +1,9 @@
-package net.qio.lang.memory;
+package net.qio.lang.memory.allocators;
 
 import lombok.Getter;
+import net.qio.lang.memory.Variable;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,8 +12,8 @@ public class QioVariableAllocator {
     @Getter
     private static final Map<String, Variable> variables = new LinkedHashMap<>();
 
-    public static boolean containsVariable(String name) {
-        return variables.containsKey(name);
+    public static boolean containsVariable(String syntax) {
+        return variables.containsKey(syntax);
     }
 
     @SuppressWarnings("unchecked")
@@ -19,7 +21,10 @@ public class QioVariableAllocator {
         Variable<T> variable = new Variable<>();
         variable.setName(name);
         variable.setValue(value);
-        variable.setType((Class<T>) value.getClass());
+        if (value.getClass().isAssignableFrom(Double.class)) {
+            variable.setType((Class<T>) Integer.class);
+        }
+        else variable.setType((Class<T>) value.getClass());
 
         push(variable);
         return variable;
@@ -68,12 +73,17 @@ public class QioVariableAllocator {
         variables.put(variable.getName(), variable);
     }
 
-    public static Variable pull(String name) {
-        return variables.get(name);
+    public static Variable pull(String syntax) {
+        String[] split = syntax.split(" ");
+        for (String spl : split)
+            if (variables.containsKey(spl))
+                return variables.get(spl);
+        return null;
     }
 
     public static <T> void set(Variable<T> variable, T value) {
         variable.setValue(value);
+        variable.setType((Class<T>) value.getClass());
     }
 
     public static <T> void setReference(Variable<Variable<T>> referencedVariable, T value) {

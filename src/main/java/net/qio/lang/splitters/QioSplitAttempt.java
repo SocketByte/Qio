@@ -13,6 +13,7 @@ public class QioSplitAttempt<A, B> {
 
         A firstPart = null;
         B secondPart = null;
+        String reg = null;
 
         for (String regex : regexes) {
             try {
@@ -30,6 +31,7 @@ public class QioSplitAttempt<A, B> {
 
                 firstPart = (A) first;
                 secondPart = (B) second;
+                reg = regex;
             } catch (Exception ignore) {
             }
         }
@@ -39,6 +41,7 @@ public class QioSplitAttempt<A, B> {
 
         abstractSplitter.setFirstPart(firstPart);
         abstractSplitter.setSecondPart(secondPart);
+        abstractSplitter.setRegex(reg);
     }
 
 }

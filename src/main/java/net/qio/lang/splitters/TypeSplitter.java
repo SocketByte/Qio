@@ -1,10 +1,11 @@
 package net.qio.lang.splitters;
 
+import net.qio.lang.exceptions.SyntaxException;
 import net.qio.lang.utilities.types.Dump;
 
-public class FunctionTypeSplitter extends QioAbstractSplitter<String, String> {
+public class TypeSplitter extends QioAbstractSplitter<String, String> {
 
-    public FunctionTypeSplitter(String source) {
+    public TypeSplitter(String source) throws SyntaxException {
         super(source);
     }
 

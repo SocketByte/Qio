@@ -1,5 +1,6 @@
 package net.qio.lang.splitters;
 
+import net.qio.lang.exceptions.SyntaxException;
 import net.qio.lang.utilities.types.Dump;
 import net.qio.lang.utilities.KeyPair;
 
@@ -11,6 +12,6 @@ public interface QioSplitter<A, B> {
     String getSource();
     String[] getPossibleRegexes();
     Dump[] getDumpedCharacters();
-    void apply();
+    void apply() throws SyntaxException;
 
 }

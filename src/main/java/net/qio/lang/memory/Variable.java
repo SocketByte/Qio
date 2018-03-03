@@ -25,6 +25,11 @@ public class Variable<T> extends QioReference {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public int hashCode() {
         return getHashCode();
     }

@@ -6,6 +6,8 @@ public enum Keyword {
     OUT,
     FUNC_START,
     FUNC_END,
-    EXECUTE
+    EXECUTE,
+    LOOP_START,
+    LOOP_END
 
 }

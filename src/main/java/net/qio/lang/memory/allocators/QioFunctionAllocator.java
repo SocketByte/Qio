@@ -1,6 +1,8 @@
-package net.qio.lang.memory;
+package net.qio.lang.memory.allocators;
 
 import lombok.Getter;
+import net.qio.lang.memory.Function;
+import net.qio.lang.memory.work.Work;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,7 +13,7 @@ public class QioFunctionAllocator {
     private static final Map<String, Function> functions = new LinkedHashMap<>();
 
     @SuppressWarnings("unchecked")
-    public static void setFunction(String name, Object callback, FunctionWork work) {
+    public static void setFunction(String name, Object callback, Work work) {
         Function function = pull(name);
         function.setWork(work);
         function.setCallback(callback);

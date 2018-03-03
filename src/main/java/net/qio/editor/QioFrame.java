@@ -39,10 +39,10 @@ public class QioFrame extends JFrame implements ActionListener {
         applyTemplates();
 
         JMenuBar mb = new JMenuBar();
-        JMenu menu = new JMenu("File");
+        JMenu menu = new JMenu("Run");
         mb.add(menu);
         JMenuItem compile = new JMenuItem(
-                "Compile");
+                "Run 'Qio' Program");
         compile.setActionCommand("Compile");
         compile.addActionListener(this);
         menu.add(compile);
@@ -97,11 +97,7 @@ public class QioFrame extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("Compile")) {
             String[] lines = textArea.getText().split("\n");
 
-            try {
-                QioInterpreter.interpret(lines);
-            } catch (SyntaxException e1) {
-                e1.printStackTrace();
-            }
+            QioInterpreter.interpret(lines);
         }
     }
 }

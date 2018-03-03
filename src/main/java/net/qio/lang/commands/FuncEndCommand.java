@@ -2,7 +2,9 @@ package net.qio.lang.commands;
 
 import net.qio.lang.QioInterpreter;
 import net.qio.lang.exceptions.SyntaxException;
-import net.qio.lang.memory.*;
+import net.qio.lang.memory.allocators.QioFunctionAllocator;
+import net.qio.lang.memory.allocators.QioVariableHolder;
+import net.qio.lang.memory.work.Work;
 import net.qio.lang.utilities.StringUtilities;
 import net.qio.lang.utilities.TypeDetector;
 import net.qio.lang.utilities.types.Keyword;
@@ -50,7 +52,7 @@ public class FuncEndCommand extends Command {
         }
 
         String name = QioInterpreter.getContainer().getName();
-        FunctionWork work = QioInterpreter.getContainer().getCurrentWork();
+        Work work = QioInterpreter.getContainer().getCurrentWork();
 
         QioFunctionAllocator.setFunction(name, callback, work);
         QioInterpreter.getContainer().clear();

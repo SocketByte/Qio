@@ -1,10 +1,16 @@
 package net.qio.lang.commands;
 
+import net.qio.lang.QioInterpreter;
 import net.qio.lang.exceptions.SyntaxException;
-import net.qio.lang.memory.Function;
-import net.qio.lang.memory.QioFunctionAllocator;
-import net.qio.lang.memory.QioVariableAllocator;
+import net.qio.lang.memory.allocators.QioFunctionAllocator;
+import net.qio.lang.memory.allocators.QioVariableAllocator;
 import net.qio.lang.memory.Variable;
+import net.qio.lang.memory.allocators.QioWorkHolder;
+import net.qio.lang.memory.temp.LoopTempContainer;
+import net.qio.lang.memory.work.WorkLoop;
+import net.qio.lang.utilities.MathUtilities;
+import net.qio.lang.utilities.PrintUtilities;
+import net.qio.lang.utilities.StringUtilities;
 import net.qio.lang.utilities.types.Keyword;
 import net.qio.lang.utilities.types.Type;
 import net.qio.lang.utilities.TypeDetector;
@@ -21,8 +27,15 @@ public class OutCommand extends Command {
             QioVariableAllocator.printVariables();
             return;
         }
+        else if (syntax.startsWith("$typeof:") && (syntax.endsWith("$"))) {
+            String[] split = syntax.split(":");
+            String var = split[1].replace("$", "");
 
-        Type type = TypeDetector.detect(syntax);
+            PrintUtilities.println(QioVariableAllocator.pull(var).getType());
+            return;
+        }
+
+        Type type = TypeDetector.detect(syntax, true);
 
         syntax = syntax.replace("\"", "");
 
@@ -36,14 +49,25 @@ public class OutCommand extends Command {
         }
         switch (type) {
             case STRING:
-                System.out.println(syntax);
+                try {
+                    PrintUtilities.println(StringUtilities.parse(StringUtilities.conditionPush(syntax)));
+                } catch (Exception ignored) {
+                    PrintUtilities.println(StringUtilities.parse(syntax));
+                }
                 break;
             case INTEGER:
-                System.out.println(syntax);
+                String replaced = syntax;
+                for (Variable variable1 : QioVariableAllocator.getVariables().values()) {
+                    replaced = replaced.replace(variable1.getName(),
+                            QioVariableAllocator.getRealValue(variable1).toString());
+                }
+                double value = MathUtilities.eval(replaced);
+
+                PrintUtilities.println(value);
                 break;
             case VARIABLE:
                 Variable variable = QioVariableAllocator.pull(syntax);
-                System.out.println(QioVariableAllocator.getRealValue(variable));
+                PrintUtilities.println(QioVariableAllocator.getRealValue(variable));
                 break;
             case FUNCTION:
                 Object callback = QioFunctionAllocator.getCallback(syntax);
@@ -54,7 +78,7 @@ public class OutCommand extends Command {
                     realValue = QioVariableAllocator.getRealValue(QioVariableAllocator.pull(varName));
                 }
 
-                System.out.println(realValue);
+                PrintUtilities.println(realValue);
                 break;
             case VOID:
                 try {

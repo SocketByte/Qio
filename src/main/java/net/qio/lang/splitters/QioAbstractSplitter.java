@@ -8,19 +8,35 @@ public abstract class QioAbstractSplitter<A, B> implements QioSplitter<A, B> {
     private final String source;
     private A firstPart;
     private B secondPart;
+    private String regex;
 
-    public QioAbstractSplitter(String source) {
+    public QioAbstractSplitter(String source) throws SyntaxException {
         this.source = source;
         apply();
     }
 
-    @Override
-    public void apply() {
-        try {
-            new QioSplitAttempt<>(this);
-        } catch (SyntaxException e) {
-            e.printStackTrace();
+    public QioAbstractSplitter(String source, boolean noAction) {
+        this.source = source;
+        if (!noAction) {
+            try {
+                apply();
+            } catch (SyntaxException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    @Override
+    public void apply() throws SyntaxException {
+        new QioSplitAttempt<>(this);
+    }
+
+    public String getRegex() {
+        return regex;
+    }
+
+    public void setRegex(String regex) {
+        this.regex = regex;
     }
 
     public void setFirstPart(A firstPart) {

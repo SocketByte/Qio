@@ -1,6 +1,7 @@
 package net.qio.lang.commands;
 
 import lombok.Getter;
+import net.qio.lang.exceptions.SyntaxException;
 import net.qio.lang.utilities.types.Keyword;
 
 import java.util.HashMap;
@@ -24,7 +25,16 @@ public class CommandManager {
     }
 
     public static boolean contains(String keyword) {
-        return commands.containsKey(Keyword.valueOf(keyword));
+        try {
+            return commands.containsKey(Keyword.valueOf(keyword));
+        } catch (Exception e) {
+            try {
+                throw new SyntaxException("Keyword " + keyword + " not found.");
+            } catch (SyntaxException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return false;
     }
 
 }

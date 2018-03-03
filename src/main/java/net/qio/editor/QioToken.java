@@ -22,6 +22,11 @@ public class QioToken extends AbstractTokenMaker {
             tokenMap.put(type.name().toLowerCase(), Token.DATA_TYPE);
 
         tokenMap.put("$variables$", Token.VARIABLE);
+        tokenMap.put("$variables-adv$", Token.VARIABLE);
+        tokenMap.put("index", Token.VARIABLE);
+
+        tokenMap.put("true", Token.DATA_TYPE);
+        tokenMap.put("false", Token.DATA_TYPE);
         return tokenMap;
     }
 

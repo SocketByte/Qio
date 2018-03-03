@@ -5,5 +5,6 @@ public enum Type {
     STRING,
     VARIABLE,
     FUNCTION,
-    VOID
+    VOID,
+    BOOLEAN
 }

@@ -2,8 +2,8 @@ package net.qio.lang.commands;
 
 import net.qio.lang.QioInterpreter;
 import net.qio.lang.exceptions.SyntaxException;
-import net.qio.lang.memory.QioFunctionAllocator;
-import net.qio.lang.splitters.FunctionTypeSplitter;
+import net.qio.lang.memory.allocators.QioFunctionAllocator;
+import net.qio.lang.splitters.TypeSplitter;
 import net.qio.lang.utilities.StringUtilities;
 import net.qio.lang.utilities.types.Keyword;
 import net.qio.lang.utilities.types.Type;
@@ -18,7 +18,12 @@ public class FuncStartCommand extends Command {
     public void execute(int tabs, String syntax) {
         if (StringUtilities.checkTabs(tabs)) return;
 
-        FunctionTypeSplitter splitter = new FunctionTypeSplitter(syntax);
+        TypeSplitter splitter = null;
+        try {
+            splitter = new TypeSplitter(syntax);
+        } catch (SyntaxException e) {
+            e.printStackTrace();
+        }
         String functionName = splitter.getFirstPart();
         String typeName = splitter.getSecondPart();
 
